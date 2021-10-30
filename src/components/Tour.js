@@ -15,7 +15,7 @@ const Tour = props => {
 					{readMore ? info : `${info.substring(0, 200)}...`}
 					<button
 						onClick={() => setReadMore(!readMore)}
-						href='#'
+						href=''
 						className='delete-btn'
 					>
 						{readMore ? 'show less' : '  read more'}

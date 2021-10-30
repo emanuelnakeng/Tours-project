@@ -16,6 +16,7 @@ const ToursList = () => {
 				setTours(tours);
 				setIsLoading(false);
 			} else {
+				setIsLoading(false);
 				setIsError(true);
 			}
 		} catch (err) {
@@ -32,26 +33,52 @@ const ToursList = () => {
 		setTours(newTours);
 	};
 
-	return (
-		<section>
-			{isLoading && (
-				<PuffLoader
-					speedMultiplier={2}
-					color={'var(--clr-primary-5)'}
-				/>
-			)}
-			{isError && <h2>Error occured...</h2>}
-			<div className='title'>
-				{tours.length >= 1 && <h2>Our Best Tours</h2>}
-				{tours.length < 1 && <h2>No Tours Found</h2>}
-				<div className='underline'></div>
-				{tours.length === 0 && (
+	if (isLoading) {
+		return (
+			<main>
+				<div className='title'>
+					<h2>Our Best Tours</h2>
+					<div className='underline'></div>
+					<PuffLoader
+						speedMultiplier={2}
+						color={'var(--clr-primary-5)'}
+					/>
+				</div>
+			</main>
+		);
+	}
+
+	if (isError) {
+		return (
+			<main>
+				<div className='title'>
+					<h2>Error No Tours Found</h2>
+					<div className='underline'></div>
+				</div>
+			</main>
+		);
+	}
+
+	if (tours.length === 0) {
+		return (
+			<main>
+				<div className='title'>
+					<h2>No Tours left</h2>
+					<div className='underline'></div>
 					<button className='btn' onClick={() => getTours()}>
 						Refresh
 					</button>
-				)}
-			</div>
+				</div>
+			</main>
+		);
+	}
 
+	return (
+		<main>
+			<div className='title'>
+				<h2>Our Best Tours</h2>
+				<div className='underline'></div>
+			</div>
 			{tours.map(tour => {
 				return (
 					<Tour
@@ -64,7 +91,7 @@ const ToursList = () => {
 					/>
 				);
 			})}
-		</section>
+		</main>
 	);
 };
 
